@@ -1,0 +1,90 @@
+main {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    max-width: 1500px;
+    margin: auto;
+}
+main a {
+    text-decoration: none;
+}
+.date {
+    width: 100%;
+    font-size: 24px;
+    color: rgba(109, 104, 104, 0.911);
+    line-height: 130%;
+    text-align: center;
+}
+/* In mobile, all articles are considered class A 
+and are shown in a single column*/
+.container, .side-news {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    order: 3;
+    width: 95%;
+}
+.side-news {
+    order: 4;
+}
+.art-A, .art-B {
+    align-items: center;
+    width: 100%;
+    margin: 10px auto;
+}
+.art-A p.art-title, .art-B p.art-title {
+    padding: 10px;
+    color: black;
+    font-size: 28px;
+}
+.art-A figure img, .art-B figure img {
+    padding-top: 10px;
+}
+.art-A figure figcaption, .art-B figure figcaption {
+    padding: 0px 5px 10px 5px;
+    color: rgba(109, 104, 104, 0.911);
+}
+.art-A p, .art-B p {
+    padding: 10px 5px;
+    color: black;
+    font-size: 18px;
+    line-height: 130%;
+}
+.pub-1, .pub-2 {
+    order: 1;
+    overflow: hidden;
+    width: 95%;
+}
+.pub-2 {
+    order: 5;
+}
+/* Show articles in two columns*/
+@media (min-width: 768px) {
+    .container, .side-news {
+        flex-direction: row;
+        flex-flow: row wrap;
+    }
+    .art-A, .art-B {
+        width: 47%;
+    }
+}
+/* Show Class-A articles in two columns and Class-B to the right*/
+@media (min-width: 1024px) {
+    .container {
+        width: 75%;
+    }
+    .side-news {
+        flex-direction: column;
+        width: 20%;
+        height: 100%;
+    }
+    .art-B { 
+        width: 100%;
+    }
+    .pub-1, .pub-2 {
+        width: 47.5%;
+    }
+    .pub-2 {
+        order: 2;
+    }
+}
