@@ -31,6 +31,7 @@ and are shown in a single column*/
     align-items: center;
     width: 100%;
     margin: 10px auto;
+    border-bottom: 1px solid #555555;
 }
 .art-A p.art-title, .art-B p.art-title {
     padding: 10px;
