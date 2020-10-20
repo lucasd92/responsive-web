@@ -16,13 +16,11 @@ img {
     align-self: center;
     width: 100%;
     text-align: center;
-}
-.header-title h1 {
     color: white;
     font-weight: 400;
     font-size: 50px;
 }
-.header-title h1 span {
+.header-title span {
     text-transform: uppercase;
     color:red;
 }
