@@ -2,20 +2,23 @@
 var form = document.getElementById("register-form");
 
 // Array with form fields
-var inputList = [{id:'name',type: 'text', name:'Name', onFocus: nameFocus, onBlur: nameBlur, onError:'At least 6 characters. Ex: John Doe'},
-                 {id:'email',type: 'email', name:'Email', onFocus: emailFocus, onBlur: emailBlur, onError:'Invalid email'},
-                 {id:'pass1',type: 'password', name:'Password', onFocus: passFocus, onBlur: passBlur, onError:'Must have at least 8 characters with numbers and letters'},
-                 {id:'pass2',type: 'password', name:'Re-type Password', onFocus: passFocus, onBlur: passBlur, onError:'Must have at least 8 characters with numbers and letters'},
-                 {id:'age',type: 'number', name:'Age', onFocus: ageFocus, onBlur: ageBlur, onError:'Must be 18 years or older'},
-                 {id:'phone',type: 'number', name:'Phone Number', onFocus: phoneFocus, onBlur: phoneBlur, onError:'Must have at least 8 digits '},
-                 {id:'addr',type: 'text', name:'Address', onFocus: addrFocus, onBlur: addrBlur, onError:'Must have at least 5 characters with numbers and letters'},
-                 {id:'city',type: 'text', name:'City', onFocus: cityFocus, onBlur: cityBlur, onError:'Must have at least 3 characters'},
-                 {id:'zip-code',type: 'number', name:'Zip Code', onFocus: zipFocus, onBlur: zipBlur, onError:'Must have at least 3 digits'},
-                 {id:'idn',type: 'number', name:'ID Number', onFocus: idnFocus, onBlur: idnBlur, onError:'Must have 7 or 8 digits'}];
-                 
+var inputList = [{id:'name',type: 'text', name:'Name', onError:'At least 6 characters. Ex: John Doe', pattern: /^([a-z]{2,}[\s]+)+([a-z]{2,})$/i},
+                 {id:'email',type: 'email', name:'Email', onError:'Invalid email', pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/},
+                 {id:'pass1',type: 'password', name:'Password', onError:'Must have at least 8 characters with numbers and letters', pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/},
+                 {id:'pass2',type: 'password', name:'Re-type Password', onError:'Must have at least 8 characters with numbers and letters', pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/},
+                 {id:'age',type: 'number', name:'Age', onError:'Must be 18 years or older', pattern: /^([1][8-9])|^([2-9][0-9])$/},
+                 {id:'phone',type: 'number', name:'Phone Number', onError:'Must have at least 8 digits', pattern: /^[0-9]{8,}$/},
+                 {id:'addr',type: 'text', name:'Address', onError:'Must have at least 5 characters with numbers and letters', pattern: /^([a-z0-9]{2,}[\s]+)+([0-9]+)$/i},
+                 {id:'city',type: 'text', name:'City', onError:'Must have at least 3 characters', pattern: /^[a-z]{3,}$/i},
+                 {id:'zipcode',type: 'number', name:'Zip Code', onError:'Must have at least 3 digits', pattern: /^[0-9]{3,}$/},
+                 {id:'idn',type: 'number', name:'ID Number', onError:'Must have 7 or 8 digits', pattern: /^[0-9]{7,8}?$/}];
+
 
 // On load add each field with its event listeners
 window.onload = function() {
+    //Generate form
+    var submitDiv = form.innerHTML;
+    form.innerHTML = '';
     for(var i=0; i < inputList.length; i++){
         form.innerHTML += '<div>\
                                 <label id="'+ inputList[i].id +'-label">'+ inputList[i].name +'</label>         \
@@ -23,111 +26,70 @@ window.onload = function() {
                                 <p id="'+ inputList[i].id +'-error">'+ inputList[i].onError +'</p>              \
                            </div>';
     }
-    // Events are not working in the same loop
+    form.innerHTML += submitDiv;
+    //Add events for form fields
     for(var i=0; i < inputList.length; i++){
         var input = document.getElementById(inputList[i].id +'-input');
-        input.addEventListener('focus',inputList[i].onFocus);
-        input.addEventListener('blur',inputList[i].onBlur);                    
+        input.addEventListener('focus',genericFocus);
+        input.addEventListener('blur',genericBlur);                    
     }
+    //Add events for submit button
+    var submitButton =  document.querySelector('input[type="submit"]');
+    submitButton.addEventListener('click',submitForm);
+    //Add events for title
+    var nameInput =  document.getElementById('name-input');
+    nameInput.addEventListener('keyup',titleTransform);
 };
 
 // Validations
-function nameFocus(){
-    clearError(event);
+function genericFocus(){
+    clearError(event.target.id);
 };
 
-function nameBlur(){
-    if(!validateInput(event.target.id)){
-        showError(event); 
+// Generic onBlur function
+function genericBlur(){
+    //Get first part of the id
+    var listId = event.target.id.split('-')[0];
+    // Find index in the InputList array
+    var index = inputList.findIndex(element => element.id === listId);
+    // Validate by id and pattern
+    if(!validateInput(event.target.id, inputList[index].pattern)){
+        showError(event.target.id); 
     }
 };
 
-function emailFocus(){
-    clearError(event);
-};
-
-function emailBlur(){
-    showError(event)
-};
-
-function passFocus(){
-    clearError(event);
-};
-
-function passBlur(){
-    showError(event)
-};
-
-function ageFocus(){
-    clearError(event);
-};
-
-function ageBlur(){
-    showError(event)
-};
-
-function phoneFocus(){
-    clearError(event);
-};
-
-function phoneBlur(){
-    showError(event)
-};
-
-function addrFocus(){
-    clearError(event);
-};
-
-function addrBlur(){
-    showError(event)
-};
-
-function cityFocus(){
-    clearError(event);
-};
-
-function cityBlur(){
-    showError(event)
-};
-
-function zipFocus(){
-    clearError(event);
-};
-
-function zipBlur(){
-    showError(event)
-};
-
-function idnFocus(){
-    clearError(event);
-};
-
-function idnBlur(){
-    showError(event)
-};
-
-function validateInput(element_id){
-
+function validateInput(element_id, patt){
     var content = document.getElementById(element_id).value;
-    var patt;
-
-    switch (element_id) {
-        case 'name-input':
-            patt = /^[a-zA-Z]+[\s]{1}[a-zA-Z]*/im;
-            break;
-    
-        default:
-            break;
-    }
-
     return patt.test(content);
 };
-function showError(event){
-    var errorMsg = document.getElementById(event.target.id).nextElementSibling;
+function showError(itemId){
+    var errorMsg = document.getElementById(itemId).nextElementSibling;
     errorMsg.style.display = 'block'; 
 }; 
 
-function clearError(event){
-    var errorMsg = document.getElementById(event.target.id).nextElementSibling;
+function clearError(itemId){
+    var errorMsg = document.getElementById(itemId).nextElementSibling;
     errorMsg.style.display = 'none';  
 }; 
+
+function submitForm(){
+    event.preventDefault();
+    var alertMsg = '';
+
+    for(var i=0; i < inputList.length; i++){
+        if(!validateInput(inputList[i].id+'-input', inputList[i].pattern)){
+            showError(inputList[i].id+'-input'); 
+            alertMsg = 'Error in ' +inputList[i].name + ' field: \n' + inputList[i].onError + '\n';
+            break;
+        }
+        var item = document.getElementById(inputList[i].id+'-input');
+        if(item.type != 'password'){
+            alertMsg += inputList[i].name + ': ' + item.value + '\n';
+        } 
+    }
+    alert(alertMsg);
+}
+
+function titleTransform(){
+    document.getElementById('form-title').innerText = 'Hello ' +  event.target.value;
+};

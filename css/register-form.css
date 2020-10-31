@@ -2,7 +2,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    order: 3;
+    order: 4;
     width: 80%;
 }
 
@@ -20,10 +20,27 @@ div > input{
     padding: 5px 0px;
     margin: 5px 0px;
 }
+
+input[type="submit"] {
+    width: 80%;
+}
 div > p {
     display: none;
     color: red;
     font-weight: bold;
+}
+#form-title{
+    order: 3;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    font-size: 50px;
+}
+#submit-container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Show form in two columns*/
