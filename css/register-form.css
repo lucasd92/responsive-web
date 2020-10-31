@@ -1,0 +1,34 @@
+#register-form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    order: 3;
+    width: 80%;
+}
+
+form div {
+    min-height: 100px;
+    width: 100%;
+}
+div > label {
+    font-weight: bold;
+    font-size: 30px;
+}
+div > input{
+    width: 100%;
+    font-size: 20px;
+    padding: 5px 0px;
+    margin: 5px 0px;
+}
+div > p {
+    display: none;
+    color: red;
+    font-weight: bold;
+}
+
+/* Show form in two columns*/
+@media (min-width: 768px) {
+    form div {
+        width: 47%;
+    }
+}
