@@ -5,7 +5,6 @@
     order: 4;
     width: 80%;
 }
-
 form div {
     min-height: 100px;
     width: 100%;
@@ -20,7 +19,6 @@ div > input{
     padding: 5px 0px;
     margin: 5px 0px;
 }
-
 input[type="submit"] {
     width: 80%;
 }
@@ -42,7 +40,6 @@ div > p {
     justify-content: center;
     align-items: center;
 }
-
 /* Show form in two columns*/
 @media (min-width: 768px) {
     form div {
