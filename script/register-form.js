@@ -16,16 +16,16 @@ var inputList = [{id:'name',type: 'text', name:'Name', onError:'At least 6 chara
 window.onload = function() {
     //Generate form
     for(var i=0; i < inputList.length; i++){
-        form.innerHTML += '<div>\
-                                <label id="'+ inputList[i].id +'-label">'+ inputList[i].name +'</label>         \
-                                <input id="'+ inputList[i].id +'-input" type="'+ inputList[i].type +'"></input> \
-                                <p id="'+ inputList[i].id +'-error">'+ inputList[i].onError +'</p>              \
-                           </div>';
+        form.innerHTML += `<div>
+                                <label id="${inputList[i].id}-label"> ${inputList[i].name} </label>         
+                                <input id="${inputList[i].id}-input" type="${inputList[i].type}"></input> 
+                                <p id="+ {inputList[i].id}-error">${inputList[i].onError}</p>              
+                           </div>`;
     }
     //Generate submit button
-    form.innerHTML +=   '<div id="submit-container">        \
-                            <input value="Submit" type="submit"></input>   \
-                        </div>';
+    form.innerHTML +=   `<div id="submit-container">        
+                            <input value="Submit" type="submit"></input>
+                        </div>`;
     //Add events for form fields
     for(var i=0; i < inputList.length; i++){
         var input = document.getElementById(inputList[i].id +'-input');
