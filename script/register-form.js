@@ -19,7 +19,7 @@ window.onload = function() {
         form.innerHTML += `<div>
                                 <label id="${inputList[i].id}-label"> ${inputList[i].name} </label>         
                                 <input id="${inputList[i].id}-input" type="${inputList[i].type}"></input> 
-                                <p id="+ {inputList[i].id}-error">${inputList[i].onError}</p>              
+                                <p id="${inputList[i].id}-error">${inputList[i].onError}</p>              
                            </div>`;
     }
     //Generate submit button
